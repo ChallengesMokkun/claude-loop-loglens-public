@@ -146,7 +146,7 @@ def iter_records(path, since=None, until=None, pattern=None):
             parsed = parse_line(line)
             if parsed:
                 time, level, message = parsed
-                if since is not None and time <= since:
+                if since is not None and time < since:
                     continue
                 if until is not None and time > until:
                     continue
