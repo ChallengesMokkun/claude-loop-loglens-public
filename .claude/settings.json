@@ -32,6 +32,17 @@
           }
         ]
       }
+    ],
+    "StopFailure": [
+      {
+        "hooks": [
+            {
+              "type": "command",
+              "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/stopfailure-log.sh",
+              "timeout": 10
+            }
+        ]
+      }
     ]
   }
 }
