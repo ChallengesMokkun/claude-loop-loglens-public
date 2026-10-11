@@ -1,0 +1,23 @@
+[project]
+name = "claude-loop-sample"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
+requires-python = ">=3.14"
+dependencies = [
+    "pytest (>=9.1.1,<10.0.0)",
+    "ruff (>=0.16.9,<0.17.0)",
+    "pytest-cov (>=7.1.0,<8.0.0)",
+    "claude-agent-sdk (>=0.2.165,<0.3.0)"
+]
+
+
+[tool.poetry]
+package-mode = false
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

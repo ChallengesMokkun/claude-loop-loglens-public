@@ -1,0 +1,16 @@
+# loglens 進捗ログ（新しいセッションはまずこれを読む）
+
+2026-07-18 v0.1: count コマンド完成（ERROR/WARN/INFO/OTHER 集計）
+2026-07-18 pytest 導入: test_loglens.py（4テスト）で count の動作を固定
+2026-07-18 --level 追加: 指定レベルのみ表示（テスト10件 全パス）
+2026-09-23 --since/--until 追加: 時刻範囲（両端含む）で絞り込み、指定時は OTHER を除外。--level 併用可（テスト16件 全パス）
+2026-09-23 JSON Lines 入力対応: .jsonl を JSON Lines として解釈、不正行・キー欠落・未知レベルは OTHER。--level/--since/--until 併用可、sample.jsonl 追加（テスト24件 全パス）
+2026-09-23 複数ファイル入力: count が複数ファイルを受け取り合算して集計（従来と同じ出力形式）、.log/.jsonl 混在可、--level/--since/--until は全ファイルに適用（テスト32件 全パス）
+2026-09-25 --top N 追加: count の後に頻出メッセージ上位 N 件を「件数 メッセージ」で表示、同数は初出順、OTHER 除外、--level/--since/--until/.jsonl/複数ファイル併用可（テスト45件 全パス）
+2026-09-26 --format json 追加: count の集計結果を JSON 1オブジェクト（indent 2、counts→total→top の順）で出力、既定 text の出力は不変、--level 時は counts をそのレベルのみに、--top/--since/--until/.jsonl/複数ファイル併用可（テスト54件 全パス、ruff OK、カバレッジ93%）
+2026-09-26 --format csv 追加: ヘッダ level,count に続き ERROR/WARN/INFO/OTHER/TOTAL を「レベル,件数」で出力、--top 時は空行＋count,message セクション（標準 CSV 引用）、--level 時はそのレベルと TOTAL のみ、text/json 出力は不変、--since/--until/.jsonl/複数ファイル併用可（テスト61件 全パス、ruff OK、カバレッジ94%）
+2026-09-28 --regex 追加: count のメッセージを Python 正規表現（re.search・大小区別）で絞り込み、指定時は OTHER 除外、不正パターンは stderr にパターンと理由を出して exit 2、--level/--since/--until/--top/--format json/csv/.jsonl/複数ファイル併用可、未指定時の出力は不変（テスト72件 全パス、ruff OK、カバレッジ94%）
+2026-09-29 --stats 追加: count の後に空行＋時間帯別「HH時 N件」を時刻順に表示、他の絞り込み（--level/--since/--until/--regex）適用後・OTHER除外の行が対象、--format json は "stats" キーを末尾に追加、--format csv とは併用不可で stderr 出力＋exit 2、未指定時の出力は不変（テスト89件 全パス、ruff OK、カバレッジ95%）
+2026-09-29 --output PATH 追加: 標準出力に出すはずの内容（text/json/csv 全形式）を PATH に UTF-8・末尾改行ありで書き出し、標準出力には「wrote: PATH」のみ表示。既存ファイルは上書き、親ディレクトリ不在時は stderr に error: を出して exit 2、--output 未指定時の出力は不変（テスト81件 全パス、ruff OK、カバレッジ94.71%）
+2026-09-29 マージ: worktree-output-dev を feature/testing に統合し、--stats と --output を両立（cmd_count は共通の出力先 out/buffer を使い、stats は json の "stats" キー追加とテキストの末尾ブロックの両方に対応）。テストは両ブランチ分をすべて保持（98件）
+2026-10-11 バグ修正: 直前の時刻フィルタ整理（a4a19c0）で iter_records の since 判定が `time <= since` となり、since の境界値がインクルーシブの仕様に反して除外されていた。`time < since` に修正（テスト98件 全パス、ruff OK、カバレッジ95.34%）

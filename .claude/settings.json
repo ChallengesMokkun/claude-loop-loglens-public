@@ -1,0 +1,25 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/verify.sh",
+            "args": [],
+            "timeout": 120
+          },
+          {
+            "type": "prompt",
+            "prompt": "開発セッションの終了判定を行います。次の JSON の\nlast_assistant_message を読んでください: $ARGUMENTS\n\n判定基準: loglens.py の変更（機能追加・オプション追加・挙動変更）を\n報告しているのに、README.md の更新に言及していない場合だけ\n{\"ok\": false, \"reason\": \"loglens.py の変更が README.md の使い方に\n反映されているか確認し、必要なら更新してから終了してください\"} を\n返します。それ以外はすべて {\"ok\": true} を返します。\n"
+          },
+          {
+            "type": "agent",
+            "prompt": "loglens の完了検問です。\ngit diff HEAD と git status --short を実行してこのターンの変更を確認し、次の2点を検証してください。\n(1) 既存テストの削除・弱体化（完全一致アサーションの緩和・順序検査の削除を含む）がないこと\n(2) タスクと無関係なファイルへの変更がないこと\n\nテストの実行は別のゲートが行うため不要です。\n調査はツール使用5回以内で終え、直ちに {\"ok\": true} または {\"ok\": false,\"reason\": \"...\"} の判定だけを返してください。$ARGUMENTS\n",
+            "timeout": 180
+          }
+        ]
+      }
+    ]
+  }
+}

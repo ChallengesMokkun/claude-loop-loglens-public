@@ -1,0 +1,13 @@
+{"timestamp": "2026-07-18 09:12:03", "level": "INFO", "message": "Server started on port 8080"}
+{"timestamp": "2026-07-18 09:12:41", "level": "INFO", "message": "User login succeeded user_id=1023"}
+{"timestamp": "2026-07-18 09:13:05", "level": "WARN", "message": "Slow query detected duration_ms=1840"}
+{"timestamp": "2026-07-18 09:14:11", "level": "ERROR", "message": "DB connection failed retrying attempt=1"}
+this is not json
+{"timestamp": "2026-07-18 09:15:00", "level": "INFO", "message": "GET /api/orders 200 31ms"}
+{"level": "WARN", "message": "missing timestamp key"}
+{"timestamp": "2026-07-18 09:16:45", "message": "missing level key"}
+{"timestamp": "2026-07-18 09:17:03", "level": "DEBUG", "message": "unsupported level"}
+
+{"timestamp": "2026-07-18 09:18:30", "level": "INFO", "message": "GET /health 200 1ms"}
+{"timestamp": "2026-07-18 09:20:05", "level": "ERROR", "message": "Unhandled exception in worker"}
+{"timestamp": "2026-07-18 09:21:33", "level": "WARN", "message": "Disk usage 81 percent"}
